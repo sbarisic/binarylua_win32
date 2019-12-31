@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
+using System.Threading;
 
 using RGiesecke.DllExport;
 using GSharp;
@@ -14,6 +16,9 @@ namespace binarylua_win32 {
 		public static void Open(IntPtr L) {
 			Lua.PushCFunction(L, LuaBinaryLoad);
 			Lua.SetField(L, Lua.GLOBALSINDEX, "binaryload");
+
+			Lua.LoadString(L, "print(\"BinaryLua Loaded\")");
+			Lua.PCall(L, 0, 0, 0);
 		}
 
 		static int LuaBinaryLoad(IntPtr LL) {
@@ -28,7 +33,6 @@ namespace binarylua_win32 {
 
 		[DllExport(ExportName = "gmod13_close", CallingConvention = CallingConvention.Cdecl)]
 		public static void Close(IntPtr L) {
-
 		}
 
 	}
